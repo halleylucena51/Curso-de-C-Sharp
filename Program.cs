@@ -1,9 +1,7 @@
-﻿// Meu primeiro código em C#
-// Halley Lucena, em 24/10/2021 
+﻿using System;
+using System.Threading;
 
-using System;
-
-namespace Calculadora
+namespace Cronometro
 {
     class Program
     {
@@ -11,119 +9,68 @@ namespace Calculadora
         {
             Menu();
         }
-        static void Soma()
-        {
-            Console.Clear();
-            Console.WriteLine("Primeiro Valor:");
-            double v1 = double.Parse(Console.ReadLine());
-            Console.WriteLine("Segundo Valor:");
-            double v2 = double.Parse(Console.ReadLine());
-
-            //Console.WriteLine(v1); 
-            // Console.WriteLine("");
-            // Console.WriteLine(v2); 
-            // Console.WriteLine("");
-
-            double resultado = v1+v2;
-
-            // Console.WriteLine("O resultado da soma é: " + resultado);   
-            // Console.WriteLine("O resultado da soma é: " + (v1 + v2)); 
-            // Console.WriteLine($"O resultado da soma é: {v1 + v2}");
-            Console.WriteLine($"O resultado da operação é: {resultado}");   
-            Console.ReadKey();
-            Menu();
-        }
-        static void Subtracao()
-        {
-            Console.Clear();
-            Console.WriteLine("Primeiro Valor:");
-            double v1 = double.Parse(Console.ReadLine());
-            Console.WriteLine("Segundo Valor:");
-            double v2 = double.Parse(Console.ReadLine());
-
-            // Console.WriteLine(v1); 
-            // Console.WriteLine("");
-            // Console.WriteLine(v2); 
-            // Console.WriteLine("");
-
-            double resultado = v1-v2;
-
-            // Console.WriteLine("O resultado da soma é: " + resultado);   
-            // Console.WriteLine("O resultado da soma é: " + (v1 + v2)); 
-            // Console.WriteLine($"O resultado da soma é: {v1 + v2}");
-            Console.WriteLine($"O resultado da operação é: {resultado}");   
-            Console.ReadKey();        
-            Menu();
-        }
-        static void Divisao()
-        {
-            Console.Clear();
-            Console.WriteLine("Primeiro Valor:");
-            double v1 = double.Parse(Console.ReadLine());
-            Console.WriteLine("Segundo Valor:");
-            double v2 = double.Parse(Console.ReadLine());
-
-            // Console.WriteLine(v1); 
-            // Console.WriteLine("");
-            // Console.WriteLine(v2); 
-            // Console.WriteLine("");
-
-            double resultado = v1/v2;
-
-            // Console.WriteLine("O resultado da soma é: " + resultado);   
-            // Console.WriteLine("O resultado da soma é: " + (v1 + v2)); 
-            // Console.WriteLine($"O resultado da soma é: {v1 + v2}");
-            Console.WriteLine($"O resultado da operação é: {resultado}");   
-            Console.ReadKey();
-            Menu();
-        }
-        static void Multiplicacao()
-
-        {
-            Console.Clear();
-            Console.WriteLine("Primeiro Valor:");
-            double v1 = double.Parse(Console.ReadLine());
-            Console.WriteLine("Segundo Valor:");
-            double v2 = double.Parse(Console.ReadLine());
-
-            // Console.WriteLine(v1); 
-            // Console.WriteLine("");
-            // Console.WriteLine(v2); 
-            // Console.WriteLine("");
-
-            double resultado = v1*v2;
-
-            // Console.WriteLine("O resultado da soma é: " + resultado);   
-            // Console.WriteLine("O resultado da soma é: " + (v1 + v2)); 
-            // Console.WriteLine($"O resultado da soma é: {v1 + v2}");
-            Console.WriteLine($"O resultado da operação é: {resultado}");   
-            Console.ReadKey();
-            Menu();
-        }
 
         static void Menu()
-
         {
             Console.Clear();
-            Console.WriteLine("O que deseja fazer :");
-            Console.WriteLine("1 - Soma");
-            Console.WriteLine("2 - Subtração");
-            Console.WriteLine("3 - Divisão");
-            Console.WriteLine("4 - Multiplicação");
-            Console.WriteLine("5 - Sair");
-            Console.WriteLine("--------------------");
-            Console.WriteLine("Selecione uma opção");
-            short res = short.Parse(Console.ReadLine());
+            Console.WriteLine("S - Segundos => 10s = 10 segundos");
+            Console.WriteLine("M - Minutos => 1m = 1 minuto");
+            Console.WriteLine("0 - Sair => 0s");
+            Console.WriteLine("Quanto tempo deseja contar ?");
 
-            switch (res)
+            string data = Console.ReadLine().ToLower();
+            char type = char.Parse(data.Substring(data.Length - 1, 1));
+            int time = int.Parse(data.Substring(0, data.Length - 1));
+            int multiplier = 1;
+
+            if (type == 'm')
+                multiplier = 60;
+
+            if (time == 0)
+                System.Environment.Exit(0);
+
+            PreStart(time * multiplier);
+
+            // Console.WriteLine(data);
+            // Console.WriteLine(type);
+            // Console.WriteLine(time);
+
+
+        }
+
+        static void PreStart(int time)
+        {
+            Console.Clear();
+            Console.WriteLine("Ready ...");
+            Thread.Sleep(1000);
+            Console.WriteLine("Set ...");
+            Thread.Sleep(1000);
+            Console.WriteLine("Go ...");
+            Thread.Sleep(2500);
+
+            Start(time);
+        }
+
+        static void Start(int time)
+        {
+            // int time = 10;
+            int currentTime = 0;
+
+            while (currentTime != time)
             {
-                case 1: Soma(); break;
-                case 2: Subtracao(); break;
-                case 3: Divisao(); break;
-                case 4: Multiplicacao(); break;
-                case 5: System.Environment.Exit(0); break;
-                default: Menu(); break;
+                Console.Clear();
+                currentTime++;
+                Console.WriteLine(currentTime);
+                Thread.Sleep(1000);
+                // 1000 milisegundos = 1 segundo
+
+
             }
-        }    
+
+            Console.Clear();
+            Console.WriteLine("Stopwatch finalizado !");
+            Thread.Sleep(2500);
+            Menu();
+        }
     }
 }
